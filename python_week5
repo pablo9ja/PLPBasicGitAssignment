@@ -1,0 +1,49 @@
+# file_handling_assignment.py
+
+def main():
+    # File creation and writing
+    try:
+        # Create a new text file in write mode
+        with open("my_file.txt", 'w') as file:
+            file.write("Hello, World!\n")
+            file.write("This is line 2.\n")
+            file.write("The number is 42.\n")
+        print("File 'my_file.txt' created and written successfully.")
+
+    except (FileNotFoundError, PermissionError) as e:
+        print(f"Error occurred while creating/writing to the file: {e}")
+    
+    finally:
+        print("Attempted to create and write to the file.")
+
+    # File reading and displaying
+    try:
+        # Read the contents of the file
+        with open("my_file.txt", 'r') as file:
+            contents = file.read()
+            print("\nContents of 'my_file.txt':")
+            print(contents)
+
+    except (FileNotFoundError, PermissionError) as e:
+        print(f"Error occurred while reading the file: {e}")
+
+    finally:
+        print("Attempted to read the file.")
+
+    # File appending
+    try:
+        # Open the file in append mode
+        with open("my_file.txt", 'a') as file:
+            file.write("This is line 4.\n")
+            file.write("The number is 100.\n")
+            file.write("Goodbye!\n")
+        print("Additional lines appended to 'my_file.txt' successfully.")
+
+    except (FileNotFoundError, PermissionError) as e:
+        print(f"Error occurred while appending to the file: {e}")
+
+    finally:
+        print("Attempted to append to the file.")
+
+if __name__ == "__main__":
+    main()
