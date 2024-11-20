@@ -1,0 +1,77 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the dataset (Iris dataset from seaborn's built-in dataset)
+try:
+    iris = sns.load_dataset('iris')  # Using Seaborn's built-in dataset
+except FileNotFoundError:
+    print("File not found. Please check the dataset file path.")
+    exit()
+
+# Display the first few rows of the dataset
+print("First 5 rows of the dataset:")
+print(iris.head())
+
+# Explore the structure of the dataset
+print("\nDataset Info:")
+print(iris.info())
+
+# Check for missing values
+print("\nMissing values in the dataset:")
+print(iris.isnull().sum())
+
+# Clean the dataset (fill or drop missing values if any)
+if iris.isnull().sum().sum() > 0:
+    iris = iris.fillna(method='ffill')  # Forward-fill as an example
+    print("\nMissing values filled.")
+
+# Compute basic statistics of numerical columns
+print("\nBasic Statistics of Numerical Columns:")
+print(iris.describe())
+
+# Group by a categorical column (species) and compute the mean of numerical columns
+print("\nMean of numerical columns grouped by species:")
+grouped_stats = iris.groupby('species').mean()
+print(grouped_stats)
+
+# Identify interesting findings
+print("\nObservations:")
+print("1. Setosa generally has smaller petal lengths and widths compared to other species.")
+print("2. Virginica tends to have the largest sepal dimensions.")
+
+# Simulate a time-series dataset
+iris['index'] = range(len(iris))  # Add an index as a time-like variable
+
+plt.figure(figsize=(10, 6))
+plt.plot(iris['index'], iris['petal_length'], label='Petal Length')
+plt.title('Trend of Petal Length Over Simulated Time')
+plt.xlabel('Simulated Time Index')
+plt.ylabel('Petal Length')
+plt.legend()
+plt.show()
+
+
+plt.figure(figsize=(10, 6))
+grouped_stats['petal_length'].plot(kind='bar', color=['blue', 'green', 'red'])
+plt.title('Average Petal Length per Species')
+plt.xlabel('Species')
+plt.ylabel('Petal Length')
+plt.show()
+
+
+plt.figure(figsize=(10, 6))
+plt.hist(iris['sepal_length'], bins=15, color='purple', alpha=0.7)
+plt.title('Distribution of Sepal Length')
+plt.xlabel('Sepal Length')
+plt.ylabel('Frequency')
+plt.show()
+
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=iris, x='sepal_length', y='petal_length', hue='species')
+plt.title('Relationship Between Sepal Length and Petal Length')
+plt.xlabel('Sepal Length')
+plt.ylabel('Petal Length')
+plt.legend(title='Species')
+plt.show()
